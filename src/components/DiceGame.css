@@ -1,0 +1,115 @@
+.dice-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.layout {
+  display: flex;
+  justify-content: center;
+  gap: 40px; /* Espacio entre las columnas */
+  width: 100%;
+  max-width: 1200px; /* Limitar el ancho máximo */
+  margin: 0 auto;
+}
+
+.menu {
+  flex: 1;
+
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.game-board {
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+
+.player-board {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+  height: 290px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.cell {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  background-color: #333;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.cell.roll {
+  transform: rotate(360deg);
+}
+.cell:hover {
+  background-color: #444;
+}
+
+.cell:empty {
+  background-color: #555;
+}
+
+.cell.full {
+  background-color: #777;
+  cursor: not-allowed;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 20px;
+  border-radius: 8px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 20px 0;
+  border-radius: 5px;
+}
+
+button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+}
+
+.scores {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.scores h3 {
+  margin: 0;
+}
+
+.score-cell {
+  height: 20px;
+}

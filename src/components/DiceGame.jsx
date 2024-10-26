@@ -4,7 +4,7 @@ import './DiceGame.css';
 import useSound from 'use-sound'; // Para el sonido
 import diceSound from '../components/sounds/dice.mp3';
 import thudSound from '../components/sounds/thud.mp3';
-
+import GameHistory from './GameHistory';
 
 
 const initialBoard = () => Array(3).fill(Array(3).fill(null));
@@ -85,7 +85,6 @@ export default function DiceGame({ startGame, playerName, setIsWinner }) {
         );
         // si el tablero esta lleno terminar el juego y guardar el historial en localStorage
         if (isFull) {
-            setIsGameOver(true);
             const player1Score = calculateScore(boards[0]);
             const player2Score = calculateScore(boards[1]);
             const winner = player1Score > player2Score ? playerName : 'IA';
@@ -105,6 +104,7 @@ export default function DiceGame({ startGame, playerName, setIsWinner }) {
                 summary.losses += 1;
             }
             localStorage.setItem('summary', JSON.stringify(summary));
+            setIsGameOver(true);
         }
     };
 
@@ -378,6 +378,7 @@ export default function DiceGame({ startGame, playerName, setIsWinner }) {
                     </button>
                 </div>
             )}
+            <GameHistory isGameOver={isGameOver} />
         </div>
     );
 }

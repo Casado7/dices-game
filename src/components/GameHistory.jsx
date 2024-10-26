@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const GameHistory = () => {
+const GameHistory = ({ isGameOver }) => {
     const [history, setHistory] = useState([]);
     const [summary, setSummary] = useState({ wins: 0, losses: 0 });
     const [playerName, setPlayerName] = useState('Player 1');
@@ -12,7 +12,7 @@ const GameHistory = () => {
         
         setHistory(savedHistory);
         setSummary(savedSummary);
-    }, []);
+    }, [isGameOver]);
 
     return (
         <div>
@@ -22,16 +22,16 @@ const GameHistory = () => {
 
             <h3>Match Results</h3>
             {history.length > 0 ? (
-                <ul>
+                <>
                     {history.map((game, index) => (
-                        <li key={index}>
+                        <div key={index}>
                             <p><strong> {game.player1}</strong> - <strong>Score:</strong> {game.player1Score}</p>
                             <p><strong> {game.player2}</strong> - <strong>Score:</strong> {game.player2Score}</p>
                             <p><strong>Winner:</strong> {game.winner}</p>
                             <hr />
-                        </li>
+                        </div>
                     ))}
-                </ul>
+                </>
             ) : (
                 <p>No game history available.</p>
             )}

@@ -9,7 +9,7 @@ import thudSound from '../components/sounds/thud.mp3';
 
 const initialBoard = () => Array(3).fill(Array(3).fill(null));
 
-export default function DiceGame({ startGame, playerName, cld, uploadResult, setIsWinner }) {
+export default function DiceGame({ startGame, playerName, setIsWinner }) {
     const [playerBoards, setPlayerBoards] = useState([initialBoard(), initialBoard()]);
     const [turn, setTurn] = useState(0); // 0 para el jugador 1, 1 para el jugador 2
     const [rolledValue, setRolledValue] = useState(null);
@@ -83,7 +83,29 @@ export default function DiceGame({ startGame, playerName, cld, uploadResult, set
         const isFull = boards.some(board =>
             board.every(row => row.every(cell => cell !== null))
         );
-        if (isFull) setIsGameOver(true);
+        // si el tablero esta lleno terminar el juego y guardar el historial en localStorage
+        if (isFull) {
+            setIsGameOver(true);
+            const player1Score = calculateScore(boards[0]);
+            const player2Score = calculateScore(boards[1]);
+            const winner = player1Score > player2Score ? playerName : 'IA';
+            const result = {
+                player1: playerName,
+                player2: 'IA',
+                player1Score,
+                player2Score,
+                winner
+            };
+            const history = JSON.parse(localStorage.getItem('history')) || [];
+            localStorage.setItem('history', JSON.stringify([...history, result]));
+            const summary = JSON.parse(localStorage.getItem('summary')) || { wins: 0, losses: 0 };
+            if (winner === playerName) {
+                summary.wins += 1;
+            } else {
+                summary.losses += 1;
+            }
+            localStorage.setItem('summary', JSON.stringify(summary));
+        }
     };
 
     // Calcular la puntuación de una columna
@@ -300,7 +322,7 @@ export default function DiceGame({ startGame, playerName, cld, uploadResult, set
                 <div className='1'>
                     {turn === 1 && (
                         <div className="turn-indicator">
-                            <h4>Es el turno del jefe...</h4>
+                            <h4>Es el turno del IA...</h4>
                             {tempValue ? <Die value={tempValue} /> : rolledValue && <Die value={rolledValue} />} {/* El valor lanzado se muestra como un dado */}
                         </div>
                     )}
@@ -312,7 +334,7 @@ export default function DiceGame({ startGame, playerName, cld, uploadResult, set
 
                 <div className='3'>
                     <div className="player-info">
-                        <h3>Jefe</h3>
+                        <h3>IA</h3>
                         <div className="scores">
                             <h3>{player2Score}</h3>
                         </div>

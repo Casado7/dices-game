@@ -96,7 +96,7 @@ export default function DiceGame({ startGame, playerName, setIsWinner }) {
                 winner
             };
             const history = JSON.parse(localStorage.getItem('history')) || [];
-            localStorage.setItem('history', JSON.stringify([...history, result]));
+            localStorage.setItem('history', JSON.stringify([result, ...history]));
             const summary = JSON.parse(localStorage.getItem('summary')) || { wins: 0, losses: 0 };
             if (winner === playerName) {
                 summary.wins += 1;
